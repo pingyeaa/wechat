@@ -13,3 +13,16 @@ type MPCode2SessionResp struct {
 	UnionID    string `json:"unionid"`
 	Error
 }
+
+// MPGetAccessTokenResp .
+type MPGetAccessTokenResp struct {
+	AccessToken string `json:"access_token"`
+	ExpiresIn   int64  `json:"expires_in"`
+	Error
+}
+
+// MPGetPaidUnionIDResp .
+type MPGetPaidUnionIDResp struct {
+	UnionID string `json:"unionid"`
+	Error
+}
