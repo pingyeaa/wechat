@@ -26,3 +26,19 @@ type MPGetPaidUnionIDResp struct {
 	UnionID string `json:"unionid"`
 	Error
 }
+
+// MPDecryptUserInfoResp .
+type MPDecryptUserInfoResp struct {
+	OpenID    string `json:"openId"`
+	NickName  string `json:"nickName"`
+	Gender    string `json:"gender"`
+	City      string `json:"city"`
+	Province  string `json:"province"`
+	Country   string `json:"country"`
+	AvatarURL string `json:"avatarUrl"`
+	UnionID   string `json:"unionId"`
+	Watermark struct {
+		AppID     string `json:"appid"`
+		Timestamp string `json:"timestamp"`
+	} `json:"watermark"`
+}
