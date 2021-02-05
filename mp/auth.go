@@ -45,25 +45,43 @@ func (t *Auth) GetPaidUnionID(accessToken string, openid string) (resp *types.MP
 
 // DecryptUserInfo .
 func (t *Auth) DecryptUserInfo(encryptedData string, sessionKey string, iv string) (resp *types.MPDecryptUserInfoResp, err error) {
+	err = t.decrypt(encryptedData, sessionKey, iv, &resp)
+	if err != nil {
+		return nil, fmt.Errorf("decrypt encryptedData failed: %s", err.Error())
+	}
+	return resp, nil
+}
+
+// DecryptPhoneData .
+func (t *Auth) DecryptPhoneData(encryptedData string, sessionKey string, iv string) (resp *types.MPDecryptPhoneDataResp, err error) {
+	err = t.decrypt(encryptedData, sessionKey, iv, &resp)
+	if err != nil {
+		return nil, fmt.Errorf("decrypt encryptedData failed: %s", err.Error())
+	}
+	return resp, nil
+}
+
+// decrypt .
+func (t *Auth) decrypt(encryptedData string, sessionKey string, iv string, v interface{}) (err error) {
 	aesData, err := base64.StdEncoding.DecodeString(encryptedData)
 	if err != nil {
-		return nil, fmt.Errorf("base64 decode encryptedData failed: %s", err.Error())
+		return fmt.Errorf("base64 decode encryptedData failed: %s", err.Error())
 	}
 	aesKey, err := base64.StdEncoding.DecodeString(sessionKey)
 	if err != nil {
-		return nil, fmt.Errorf("base64 decode sessionKey failed: %s", err.Error())
+		return fmt.Errorf("base64 decode sessionKey failed: %s", err.Error())
 	}
 	aesIV, err := base64.StdEncoding.DecodeString(iv)
 	if err != nil {
-		return nil, fmt.Errorf("base64 decode iv failed: %s", err.Error())
+		return fmt.Errorf("base64 decode iv failed: %s", err.Error())
 	}
 	plainText, err := utils.AESCBCDecrypt(aesData, aesKey, aesIV...)
 	if err != nil {
-		return nil, fmt.Errorf("aes cbc descrypt failed: %s", err.Error())
+		return fmt.Errorf("aes cbc descrypt failed: %s", err.Error())
 	}
-	err = json.Unmarshal(plainText, &resp)
+	err = json.Unmarshal(plainText, &v)
 	if err != nil {
-		return nil, fmt.Errorf("json decode failed: %s", err.Error())
+		return fmt.Errorf("json decode failed: %s", err.Error())
 	}
-	return resp, nil
+	return nil
 }

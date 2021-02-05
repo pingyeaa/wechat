@@ -29,16 +29,27 @@ type MPGetPaidUnionIDResp struct {
 
 // MPDecryptUserInfoResp .
 type MPDecryptUserInfoResp struct {
-	OpenID    string `json:"openId"`
-	NickName  string `json:"nickName"`
-	Gender    string `json:"gender"`
-	City      string `json:"city"`
-	Province  string `json:"province"`
-	Country   string `json:"country"`
-	AvatarURL string `json:"avatarUrl"`
-	UnionID   string `json:"unionId"`
-	Watermark struct {
-		AppID     string `json:"appid"`
-		Timestamp string `json:"timestamp"`
-	} `json:"watermark"`
+	OpenID    string       `json:"openId"`
+	NickName  string       `json:"nickName"`
+	Gender    string       `json:"gender"`
+	City      string       `json:"city"`
+	Province  string       `json:"province"`
+	Country   string       `json:"country"`
+	AvatarURL string       `json:"avatarUrl"`
+	UnionID   string       `json:"unionId"`
+	Watermark *MPWaterMark `json:"watermark"`
+}
+
+// MPDecryptPhoneDataResp .
+type MPDecryptPhoneDataResp struct {
+	PhoneNumber     string       `json:"phoneNumber"`
+	PurePhoneNumber string       `json:"purePhoneNumber"`
+	CountryCode     string       `json:"countryCode"`
+	WaterMark       *MPWaterMark `json:"watermark"`
+}
+
+// MPWaterMark 水印
+type MPWaterMark struct {
+	Timestamp int64  `json:"timestamp"`
+	AppID     string `json:"appid"`
 }
